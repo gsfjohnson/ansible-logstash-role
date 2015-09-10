@@ -1,0 +1,18 @@
+input {
+{% for host in redis_hosts %}
+  redis {
+    host => "{{ host }}"
+    key => "logstash"
+    data_type => "list"
+    codec => json
+    type => "redis"
+  }
+{% endfor %}
+}
+
+# note processor
+filter {
+  mutate {
+    replace => [ "_PROCBY", "{{ ansible_hostname }}" ]
+  }
+}

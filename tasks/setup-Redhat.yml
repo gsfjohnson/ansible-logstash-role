@@ -1,0 +1,14 @@
+---
+- name: add rpm key
+  rpm_key:
+    key: http://packages.elasticsearch.org/GPG-KEY-elasticsearch
+    state: present
+
+- name: add repo
+  template:
+    src: logstash.repo.j2
+    dest: "{{ logstash_yum_repo_dest }}"
+    mode: 0644
+  
+- name: install pkg
+  yum: pkg=logstash state=installed enablerepo=logstash-1.4

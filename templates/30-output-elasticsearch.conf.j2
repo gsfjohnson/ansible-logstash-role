@@ -1,0 +1,9 @@
+output {
+  elasticsearch {
+    protocol => "node"
+    host => "localhost"
+    node_name => "{{ ansible_hostname }}"
+    cluster => "es_prod"
+  }
+}
+

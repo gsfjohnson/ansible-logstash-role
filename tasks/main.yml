@@ -1,0 +1,47 @@
+---
+- include: setup-RedHat.yml
+  when: ansible_os_family == 'RedHat'
+
+#- include: setup-Debian.yml
+#  when: ansible_os_family == 'Debian'
+
+- name: config IO
+  template:
+    src: "{{ item }}.j2"
+    dest: "/etc/logstash/conf.d/{{ item }}"
+    owner: root
+    group: root
+    mode: 0644
+  with_items:
+    - 13-input-redis.conf
+    - 30-output-elasticsearch.conf
+  notify: restart logstash
+  
+- name: config filters
+  copy:
+    src: "{{ item }}"
+    dest: "/etc/logstash/conf.d/{{ item }}"
+    owner: root
+    group: root
+    mode: 0644
+  with_items:
+    - 20-filter-switchboard.conf
+    - 23-filter-extendedType.conf
+    - 24-filter-syslog.conf
+    - 25-filter-aqua.conf
+    - 27-filter-nxlog.conf
+  notify: restart logstash
+
+- name: config patterns
+  copy:
+    src: "{{ item }}.patterns"
+    dest: "/opt/logstash/patterns/{{ item }}"
+    owner: root
+    group: root
+    mode: 0644
+  with_items:
+    - uak-oit
+  notify: restart logstash
+
+- name: service enable, start
+  service: "name=logstash state=started enabled={{ logstash_enabled_on_boot }}"
