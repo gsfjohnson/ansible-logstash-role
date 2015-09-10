@@ -1,5 +1,5 @@
 input {
-{% for host in redis_hosts %}
+{% for host in ls_redis_hosts %}
   redis {
     host => "{{ host }}"
     key => "logstash"

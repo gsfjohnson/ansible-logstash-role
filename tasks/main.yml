@@ -44,4 +44,4 @@
   notify: restart logstash
 
 - name: service enable, start
-  service: "name=logstash state=started enabled={{ logstash_enabled_on_boot }}"
+  service: "name=logstash state={{ls_svc_state}} enabled={{ ls_svc_enabled }}"
