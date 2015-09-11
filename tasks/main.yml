@@ -15,7 +15,7 @@
   with_items:
     - 13-input-redis.conf
     - 30-output-elasticsearch.conf
-  notify: restart logstash
+  notify: svc restart ls
   
 - name: config filters
   copy:
@@ -30,7 +30,7 @@
     - 24-filter-syslog.conf
     - 25-filter-aqua.conf
     - 27-filter-nxlog.conf
-  notify: restart logstash
+  notify: svc restart ls
 
 - name: config patterns
   copy:
@@ -41,7 +41,14 @@
     mode: 0644
   with_items:
     - uak-oit
-  notify: restart logstash
+  notify: svc restart ls
+
+- name: svc enable verbose
+  lineinfile:
+    dest: /etc/selinux/config
+    regexp: ^LS_OPTS=
+    line: LS_OPTS="--verbose"
+  notify: svc restart ls
 
 - name: service enable, start
   service: "name=logstash state={{ls_svc_state}} enabled={{ ls_svc_enabled }}"
