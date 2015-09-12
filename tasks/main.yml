@@ -24,13 +24,14 @@
     owner: root
     group: root
     mode: 0644
-  with_items:
-    - 20-filter-switchboard.conf
-    - 23-filter-extendedType.conf
-    - 24-filter-syslog.conf
-    - 25-filter-aqua.conf
-    - 27-filter-nxlog.conf
+  with_items: ls_filters
   notify: svc restart ls
+
+- name: config gist filters
+  get_url:
+    url: "{{item.url}}"
+    dest: "/etc/logstash/conf.d/{{item.dest}}"
+  with_items: ls_gist_filters
 
 - name: config patterns
   copy:
@@ -39,8 +40,17 @@
     owner: root
     group: root
     mode: 0644
-  with_items:
-    - uak-oit
+  with_items: ls_patterns
+  notify: svc restart ls
+
+- name: config gist patterns
+  get_url:
+    url: "{{ item.url }}"
+    dest: "/opt/logstash/patterns/{{ item.dest }}"
+    owner: root
+    group: root
+    mode: 0644
+  with_items: ls_gist_patterns
   notify: svc restart ls
 
 - name: svc enable verbose
