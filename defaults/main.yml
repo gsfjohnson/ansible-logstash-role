@@ -10,7 +10,7 @@ ls_conf_dir: "/etc/logstash/conf.d/"
 ls_svc_state: started
 ls_svc_enabled: yes
 
-ls_es_cluster: es_dev
+ls_es_cluster: elasticsearch
 
 ls_defaults: "LS_USER=logstash"
 
