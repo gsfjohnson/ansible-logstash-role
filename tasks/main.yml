@@ -45,7 +45,7 @@
 
 - name: svc enable verbose
   lineinfile:
-    dest: /etc/selinux/config
+    dest: /etc/sysconfig/logstash
     regexp: ^LS_OPTS=
     line: LS_OPTS="--verbose"
   notify: svc restart ls
