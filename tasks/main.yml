@@ -60,14 +60,5 @@
     line: LS_OPTS="--verbose"
   notify: svc restart ls
 
-- name: load dashboards into es
-  uri:
-    url: "http://localhost:9200/kibana-int/dashboard/{{item.dest}}"
-    method: PUT
-    body: "{{ lookup('file','/var/www/html/kibana3/app/dashboards/'+item.dest) }}"
-    body_format: raw
-    status_code: 201
-  with_items: kibana_views
-
 - name: service enable, start
   service: "name=logstash state={{ls_svc_state}} enabled={{ ls_svc_enabled }}"
