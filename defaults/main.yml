@@ -22,3 +22,6 @@ ls_gist_filters: []
 ls_patterns: []
 ls_gist_patterns: []
 
+ls_yum_java_pkgs:
+  - java-1.7.0-openjdk
+
