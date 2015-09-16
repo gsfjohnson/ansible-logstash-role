@@ -29,7 +29,7 @@
 
 - name: config gist filters
   get_url:
-    url: "https://gist.githubusercontent.com/{{item.user}}/{{item.gist}}/raw"
+    url: "https://gist.githubusercontent.com/{{item.gist}}/raw"
     dest: "/etc/logstash/conf.d/{{item.dest}}"
   with_items: ls_gist_filters
 
@@ -45,7 +45,7 @@
 
 - name: config gist patterns
   get_url:
-    url: "https://gist.githubusercontent.com/{{item.user}}/{{item.gist}}/raw"
+    url: "https://gist.githubusercontent.com/{{item.gist}}/raw"
     dest: "/opt/logstash/patterns/{{ item.dest }}"
     owner: root
     group: root
