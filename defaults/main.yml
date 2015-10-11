@@ -1,7 +1,7 @@
 ---
 # defaults file for logstash-role
 
-ls_version: "1.4"
+ls_version: "1.5"
 
 ls_repo_key: "http://packages.elasticsearch.org/GPG-KEY-elasticsearch"
 ls_yum_repo_dest: "/etc/yum.repos.d/logstash.repo"
@@ -25,5 +25,5 @@ ls_patterns: []
 ls_gist_patterns: []
 
 ls_yum_java_pkgs:
-  - java-1.7.0-openjdk
+  - java-1.8.0-openjdk
 

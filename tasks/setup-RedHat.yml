@@ -15,4 +15,4 @@
   with_items: ls_yum_java_pkgs
 
 - name: install pkg
-  yum: pkg=logstash state=installed enablerepo=logstash-1.4
+  yum: pkg=logstash state=installed enablerepo=logstash-{{ls_version}}
