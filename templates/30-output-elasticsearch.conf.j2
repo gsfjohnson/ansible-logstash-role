@@ -1,7 +1,7 @@
 output {
   elasticsearch {
     protocol => "node"
-    host => "localhost"
+    host => "{{ls_es_host}}"
     node_name => "{{ ansible_hostname }}"
     cluster => "{{ls_es_cluster}}"
   }

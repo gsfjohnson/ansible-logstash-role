@@ -17,6 +17,8 @@ ls_defaults: "LS_USER=logstash"
 ls_redis_hosts:
   - localhost
 
+ls_es_host: localhost
+
 ls_filters: []
 ls_gist_filters: []
 ls_patterns: []
