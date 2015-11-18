@@ -14,8 +14,8 @@
   
 - name: config filters
   copy:
-    src: "{{ item }}"
-    dest: "/etc/logstash/conf.d/{{ item }}"
+    src: "{{item.src}}"
+    dest: "/etc/logstash/conf.d/{{item.dest}}"
     owner: "{{ls_owner}}"
     group: "{{ls_group}}"
     mode: "{{ls_mode}}"
@@ -30,8 +30,8 @@
 
 - name: config patterns
   copy:
-    src: "{{ item }}.patterns"
-    dest: "/opt/logstash/patterns/{{ item }}"
+    src: "{{item.src}}"
+    dest: "/opt/logstash/patterns/{{item.dest}}"
     owner: "{{ls_owner}}"
     group: "{{ls_group}}"
     mode: "{{ls_mode}}"

@@ -12,7 +12,7 @@ ls_svc_name: logstash
 ls_svc_state: started
 ls_svc_enabled: yes
 
-ls_owner: logstash
+ls_owner: root
 ls_group: logstash
 ls_mode: "0644"
 
