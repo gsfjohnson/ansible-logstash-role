@@ -12,7 +12,7 @@
  
 - name: install java
   yum: name={{ item }} state={{ls_yum_java_state}}
-  with_items: ls_yum_java_pkgs
+  with_items: "{{ls_yum_java_pkgs}}"
 
 - name: install pkg
   yum: pkg=logstash state={{ls_yum_state}} enablerepo=logstash-{{ls_version}}

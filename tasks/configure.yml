@@ -19,14 +19,14 @@
     owner: "{{ls_owner}}"
     group: "{{ls_group}}"
     mode: "{{ls_mode}}"
-  with_items: ls_filters
+  with_items: "{{ls_filters}}"
   notify: svc restart ls
 
 - name: config gist filters
   get_url:
     url: "https://gist.githubusercontent.com/{{item.gist}}/raw"
     dest: "/etc/logstash/conf.d/{{item.dest}}"
-  with_items: ls_gist_filters
+  with_items: "{{ls_gist_filters}}"
 
 - name: config patterns
   copy:
@@ -35,7 +35,7 @@
     owner: "{{ls_owner}}"
     group: "{{ls_group}}"
     mode: "{{ls_mode}}"
-  with_items: ls_patterns
+  with_items: "{{ls_patterns}}"
   notify: svc restart ls
 
 - name: config gist patterns
@@ -45,7 +45,7 @@
     owner: "{{ls_owner}}"
     group: "{{ls_group}}"
     mode: "{{ls_mode}}"
-  with_items: ls_gist_patterns
+  with_items: "{{ls_gist_patterns}}"
   notify: svc restart ls
 
 - name: svc enable verbose
