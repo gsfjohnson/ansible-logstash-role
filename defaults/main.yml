@@ -1,12 +1,13 @@
 ---
 # defaults file for logstash-role
 
-ls_version: "1.4"
+ls_version: 2.1
 
 ls_repo_key: "http://packages.elasticsearch.org/GPG-KEY-elasticsearch"
 ls_yum_repo_dest: "/etc/yum.repos.d/logstash.repo"
 
 ls_conf_dir: "/etc/logstash/conf.d/"
+ls_pattern_dir: /etc/logstash/patterns
 
 ls_svc_name: logstash
 ls_svc_state: started
@@ -25,9 +26,7 @@ ls_es_host: localhost
 ls_es_protocol: http
 
 ls_filters: []
-ls_gist_filters: []
 ls_patterns: []
-ls_gist_patterns: []
 
 ls_yum_state: installed
 

@@ -1,51 +1,61 @@
 ---
 
-- name: config IO
+- name: filter templates
   template:
-    src: "{{ item }}.j2"
-    dest: "/etc/logstash/conf.d/{{ item }}"
-    owner: "{{ls_owner}}"
-    group: "{{ls_group}}"
-    mode: "{{ls_mode}}"
-  with_items:
-    - 13-input-redis.conf
-    - 30-output-elasticsearch.conf
-  notify: svc restart ls
-  
-- name: config filters
-  copy:
     src: "{{item.src}}"
-    dest: "/etc/logstash/conf.d/{{item.dest}}"
+    dest: "{{ls_conf_dir}}/{{item.dest}}"
     owner: "{{ls_owner}}"
     group: "{{ls_group}}"
     mode: "{{ls_mode}}"
   with_items: "{{ls_filters}}"
+  when: item.type is defined and item.type == 'template'
   notify: svc restart ls
-
-- name: config gist filters
-  get_url:
-    url: "https://gist.githubusercontent.com/{{item.gist}}/raw"
-    dest: "/etc/logstash/conf.d/{{item.dest}}"
-  with_items: "{{ls_gist_filters}}"
-
-- name: config patterns
+  
+- name: filters files
   copy:
     src: "{{item.src}}"
-    dest: "/opt/logstash/patterns/{{item.dest}}"
+    dest: "{{ls_conf_dir}}/{{item.dest}}"
+    owner: "{{ls_owner}}"
+    group: "{{ls_group}}"
+    mode: "{{ls_mode}}"
+  with_items: "{{ls_filters}}"
+  when: item.type is not defined or ( item.type is defined and item.type == 'file' )
+  notify: svc restart ls
+
+- name: filter gists
+  get_url:
+    url: "https://gist.githubusercontent.com/{{item.gist}}/raw"
+    dest: "{{ls_conf_dir}}/{{item.dest}}"
+  with_items: "{{ls_filters}}"
+  when: item.type is defined and item.type == 'gist'
+  notify: svc restart ls
+
+- name: create pattern dir
+  file:
+    path: "{{ls_pattern_dir}}"
+    state: directory
+    mode: '0755'
+
+- name: pattern files
+  copy:
+    src: "{{item.src}}"
+    dest: "{{ls_pattern_dir}}/{{item.dest}}"
     owner: "{{ls_owner}}"
     group: "{{ls_group}}"
     mode: "{{ls_mode}}"
   with_items: "{{ls_patterns}}"
+  when: item.type is not defined or ( item.type is defined and item.type == 'file' )
   notify: svc restart ls
 
-- name: config gist patterns
+- name: pattern gists
   get_url:
     url: "https://gist.githubusercontent.com/{{item.gist}}/raw"
-    dest: "/opt/logstash/patterns/{{ item.dest }}"
+    dest: "{{ls_pattern_dir}}/{{ item.dest }}"
     owner: "{{ls_owner}}"
     group: "{{ls_group}}"
     mode: "{{ls_mode}}"
-  with_items: "{{ls_gist_patterns}}"
+  with_items: "{{ls_patterns}}"
+  when: item.type is defined and item.type == 'gist'
   notify: svc restart ls
 
 - name: svc enable verbose
