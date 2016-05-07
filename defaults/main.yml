@@ -22,7 +22,7 @@ ls_defaults: "LS_USER=logstash"
 ls_redis_hosts:
   - localhost
 
-ls_es_host: localhost
+ls_es_host: 127.0.0.1
 ls_es_protocol: http
 
 ls_filters: []
@@ -34,3 +34,4 @@ ls_yum_java_state: installed
 ls_yum_java_pkgs:
   - java-1.7.0-openjdk
 
+ls_opts: 

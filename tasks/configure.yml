@@ -58,11 +58,11 @@
   when: item.type is defined and item.type == 'gist'
   notify: svc restart ls
 
-- name: svc enable verbose
+- name: svc options
   lineinfile:
     dest: /etc/sysconfig/logstash
-    regexp: ^LS_OPTS=
-    line: LS_OPTS="--verbose"
+    regexp: "^LS_OPTS="
+    line: "LS_OPTS=\"{{ls_opts}}\""
   notify: svc restart ls
 
 - name: service enable, start
