@@ -1,3 +1,6 @@
 ---
+
 - name: svc restart ls
   service: name=logstash state=restarted
+  when: service_start_enable is defined and service_start_enable.changed is defined and service_start_enable.changed == false
+

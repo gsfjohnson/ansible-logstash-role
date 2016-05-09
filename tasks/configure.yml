@@ -70,4 +70,5 @@
     name={{ls_svc_name}}
     state={{ls_svc_state}}
     enabled={{ls_svc_enabled}}
+  register: service_start_enable
 
